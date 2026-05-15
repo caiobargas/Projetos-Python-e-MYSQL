@@ -1,0 +1,92 @@
+def listarProdutos(produtos):
+    if len(produtos) == 0:
+        print("Nenhum produto cadastrado.")
+    else:
+        for i in range(len(produtos)):
+            print(f"{i} - {produtos[i]['nome']} - R${produtos[i]['preco']}")
+
+
+def adicionarProduto(produtos, produto):
+    produtos.append(produto)
+    return True
+
+
+def buscarProduto(produtos, nome):
+    for i in range(len(produtos)):
+        if produtos[i]["nome"] == nome:
+            return i
+    return None
+
+
+def atualizarProduto(produtos, indice, novoProduto):
+    produtos[indice] = novoProduto
+    return True
+
+
+def removerProduto(produtos, indice):
+    produtos.pop(indice)
+    return True
+
+
+produtos = []
+opcao = -1
+
+while opcao != 0:
+    print("\n===== MENU ======")
+    print("1 - Listar produtos")
+    print("2 - Adicionar produto")
+    print("3 - Buscar produto")
+    print("4 - Atualizar produto")
+    print("5 - Remover produto")
+    print("0 - Sair")
+
+    opcao = int(input("Escolha uma opção: "))
+
+    if opcao == 1:
+        listarProdutos(produtos)
+
+    elif opcao == 2:
+        nome = input("Digite o nome do produto: ")
+        preco = float(input("Digite o preço do produto: "))
+
+        produto = {
+            "nome": nome,
+            "preco": preco
+        }
+
+        adicionarProduto(produtos, produto)
+        print("Produto adicionado com sucesso!")
+
+    elif opcao == 3:
+        nome = input("Digite o nome do produto: ")
+        indice = buscarProduto(produtos, nome)
+
+        if indice is not None:
+            novoNome = input("Novo nome: ")
+            novoPreco = float(input("Novo preco: "))
+
+            novoProduto = {
+                "nome": novoNome,
+                "preco": novoPreco
+            }
+
+            atualizarProduto(produtos, indice, novoProduto)
+            print("Produto atualizado com sucesso!")
+        else:
+            print("Produto não encontrado.")
+
+    elif opcao == 5:
+        nome = input("Digite o nome do produto que deseja remover: ")
+        indice = buscarProduto(produtos, nome)
+
+        if indice is not None:
+            removerProduto(produtos, indice)
+            print("Produto removido com sucesso!")
+        else:
+            print("Produto não encontrado.")
+
+    elif opcao == 0:
+        print("Encerrando o programa...")
+
+    else:
+        print("Opção inválida, tenta novamente!")
